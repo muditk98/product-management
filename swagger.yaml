@@ -1,0 +1,406 @@
+swagger: "2.0"
+info:
+  description: "This is a product management rest api system"
+  version: "1.0.0"
+  title: "Product Management System"
+  contact:
+    email: "kapsmudit@gmail.com"
+host: "localhost:3000"
+basePath: "/"
+tags:
+- name: product
+  description: "Everything about products"
+- name: category
+  description: "Everything about categories"
+schemes:
+- "http"
+paths:
+  /products:
+    
+    get:
+      tags:
+        - product
+      summary: "Get products based on name (regex case insensitive match)"
+      operationId: "getProductsByName"
+      consumes: 
+        - application/json
+      produces: 
+        - application/json
+      parameters:
+      - in: query
+        name: name
+        description: "Name string that is used for searching for products"
+        type: string
+      responses:
+        200:
+          description: "A list of products satisfying name search"
+          schema:
+            type: array
+            items:
+              $ref: "#/definitions/GetProduct"
+    
+    post:
+      tags:
+        - product
+      summary: "Add a new product"
+      operationId: addProduct
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+        - in: body
+          name: product
+          required: true
+          schema: 
+            $ref: "#/definitions/PostProduct"
+      responses:
+        400:
+          description: "Malformed product was posted. Server refused to process"
+          schema:
+            type: object
+            properties:
+              success:
+                type: boolean
+        200: 
+          description: "Successfully created a new product"
+          schema:
+            type: object
+            properties:
+              success:
+                type: boolean
+              id:
+                type: integer
+                description: "The id of the created product"
+              uri:
+                type: string
+                format: uri-reference
+                description: "URI that points to the created product"
+
+
+  /products/{id}:
+
+    parameters:
+      - in: path
+        name: id
+        type: integer
+        required: true
+        description: 'The id of the product'
+    
+    get:
+      tags:
+        - product
+      summary: 'Get the product specified by the id in the path'
+      operationId: 'getProductById'
+      consumes: 
+        - application/json
+      produces: 
+        - application/json
+      responses:
+        200:
+          description: 'Successfully retrieved product'
+          schema:
+            $ref: '#/definitions/GetProduct'
+        404:
+          description: 'Product not found'
+    
+    delete:
+      tags:
+        - product
+      summary: 'Delete the product specified by the id in the path'
+      operationId: 'deleteProductById'
+      consumes: 
+        - application/json
+      produces: 
+        - application/json
+      responses:
+        200:
+          description: 'Successfully deleted product'
+        404:
+          description: 'Product not found'
+
+    put:
+      tags:
+        - product
+      summary: 'Update the product specified by the id in the path'
+      operationId: 'updateProductById'
+      consumes: 
+        - application/json
+      produces: 
+        - application/json
+      parameters:
+        - in: body
+          name: product
+          required: true
+          schema:
+            $ref: '#/definitions/Product'
+      responses:
+        200:
+          description: 'Successfully updated product'
+        404:
+          description: 'Product not found'
+    
+    post:
+      tags:
+        - product
+      summary: "Create new product instances for this product, each having their unique SKU's"
+      operationId: 'createProductInstances'
+      consumes: 
+        - application/json
+      produces: 
+        - application/json
+      parameters:
+        - in: body
+          name: instance_count
+          required: true
+          schema:
+            type: integer
+            minimum: 1
+      responses:
+        200:
+          description: 'Successfully created product instances'
+          schema: 
+            type: array
+            items:
+              type: string
+              pattern: /\d{5,}-\d{5,}/
+        404:
+          description: 'Product not found'
+
+
+  /categories:  
+
+    get:
+      tags:
+        - category
+      summary: "Get categories based on name (regex case insensitive match)"
+      operationId: "getCategoriesByName"
+      consumes: 
+        - application/json
+      produces: 
+        - application/json
+      parameters:
+      - in: query
+        name: name
+        description: "Name string that is used for searching for categories"
+        type: string
+      responses:
+        200:
+          description: "A list of categories satisfying name search"
+          schema:
+            type: array
+            items:
+              $ref: "#/definitions/GetCategory"
+    
+    post:
+      tags:
+        - category
+      summary: "Add a new category"
+      operationId: addCategory
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+        - in: body
+          name: category
+          required: true
+          schema: 
+            $ref: "#/definitions/PostCategory"
+      responses:
+        400:
+          description: "Malformed category was posted. Server refused to process"
+          schema:
+            type: object
+            properties:
+              success:
+                type: boolean
+        200: 
+          description: "Successfully created a new category"
+          schema:
+            type: object
+            properties:
+              success:
+                type: boolean
+              id:
+                type: integer
+                description: "The id of the created category"
+              uri:
+                type: string
+                format: uri-reference
+                description: "URI that points to the created category"
+            
+  /categories/{id}:
+    parameters:
+      - in: path
+        name: id
+        type: integer
+        required: true
+        description: 'The id of the category'
+    
+    get:
+      tags:
+        - category
+      summary: 'Get the category specified by the id in the path'
+      operationId: 'getCategoryById'
+      consumes: 
+        - application/json
+      produces: 
+        - application/json
+      responses:
+        200:
+          description: 'Successfully retrieved category'
+          schema:
+            $ref: '#/definitions/GetCategory'
+        404:
+          description: 'Category not found'
+    
+    delete:
+      tags:
+        - category
+      summary: 'Delete the category specified by the id in the path'
+      description: 'Warning. Deleting will also delete all children courses and products'
+      operationId: 'deleteCategoryById'
+      consumes: 
+        - application/json
+      produces: 
+        - application/json
+      responses:
+        200:
+          description: 'Successfully deleted category'
+        404:
+          description: 'Category not found'
+
+    put:
+      tags:
+        - category
+      summary: 'Update the category specified by the id in the path'
+      operationId: 'updateCategoryById'
+      consumes: 
+        - application/json
+      produces: 
+        - application/json
+      parameters:
+        - in: body
+          name: category
+          required: true
+          schema:
+            $ref: '#/definitions/Category'
+      responses:
+        200:
+          description: 'Successfully updated category'
+        404:
+          description: 'Category not found'
+
+
+definitions:
+  Product:
+    type: object
+    properties:
+      name:
+        type: string
+        description: "The name of the product"
+      id:
+        type: integer
+        description: "Unique id of product"
+      category_id:
+        type: integer
+        description: "Unique id of the category this product belongs to"
+      brand:
+        type: string
+      price:
+        type: number
+        minimum: 0
+        format: float64
+      attributes:
+        type: object
+        description: "Contains additional data like metadata, live status, family, media, physical/digital"
+  GetProduct:
+    required:
+    - id
+    - name
+    - category_id
+    - brand
+    - price
+    allOf:
+      - $ref: "#/definitions/Product"
+      - $ref: '#/definitions/Links'
+    properties:
+      taxed_price:
+        type: number
+        minimum: 0
+        description: "Price after tax has been applied"
+  PostProduct:
+    required:
+    - name
+    - category_id
+    - brand
+    - price
+    allOf:
+      - $ref: "#/definitions/Product"
+  Category:
+    type: object
+    properties:
+      name:
+        type: string
+        description: "The name of the category"
+      id:
+        type: integer
+        description: "Unique id of category"
+      tax:
+        description: "Percentage of tax applied for all products in this category"
+        type: number
+        minimum: 0
+        maximum: 100
+        format: float64
+      parent_id:
+        type: integer
+        description: Unique id of parent category
+      children_ids:
+        type: array
+        description: "Unique ids of all child categories"
+        items:
+          type: integer
+      products:
+        type: array
+        description: 'Unique ids of all products that directly belong to this category'
+        items:
+          type: integer
+  GetCategory:
+    required:
+      - id
+      - name
+      - tax
+      - parent_id
+      - children_ids
+      - products
+    allOf:
+      - $ref: "#/definitions/Category"
+      - $ref: '#/definitions/Links'
+  PostCategory:
+    required:
+      - name
+      - tax
+      - parent_id
+    allOf:
+      - $ref: "#/definitions/Category"
+  Links:
+    type: object
+    properties:
+      links:
+        type: array
+        items:
+          type: object
+          properties:
+            rel:
+              type: string
+            href:
+              type: string
+              format: 'uri-indicator'
+            method:
+              type: 'string'
+              enum:
+                - GET
+                - POST
+                - PUT
+                - DELETE

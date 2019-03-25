@@ -1,0 +1,31 @@
+{
+  "name": "product-management",
+  "version": "1.0.0",
+  "description": "A product management rest api system",
+  "main": "app.js",
+  "scripts": {
+	"test": "nodemon app.js",
+	"start": "node app.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/thewusspuss/product-management.git"
+  },
+  "keywords": [
+    "REST",
+    "node",
+    "API",
+    "swagger",
+    "validation"
+  ],
+  "author": "Mudit Kapoor",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/thewusspuss/product-management/issues"
+  },
+  "homepage": "https://github.com/thewusspuss/product-management#readme",
+  "dependencies": {
+    "cors": "^2.8.5",
+    "express": "^4.16.4"
+  }
+}
