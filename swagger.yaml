@@ -137,6 +137,8 @@ paths:
       responses:
         200:
           description: 'Successfully updated product'
+          schema:
+            $ref: '#/definitions/GetProduct'
         404:
           description: 'Product not found'
     
@@ -151,11 +153,14 @@ paths:
         - application/json
       parameters:
         - in: body
-          name: instance_count
+          name: body
           required: true
           schema:
-            type: integer
-            minimum: 1
+            type: object
+            properties:
+              instances: 
+                type: number
+                minimum: 1
       responses:
         200:
           description: 'Successfully created product instances'
@@ -361,7 +366,7 @@ definitions:
         description: "Unique ids of all child categories"
         items:
           type: integer
-      products:
+      product_ids:
         type: array
         description: 'Unique ids of all products that directly belong to this category'
         items:
@@ -373,7 +378,7 @@ definitions:
       - tax
       - parent_id
       - children_ids
-      - products
+      - product_ids
     allOf:
       - $ref: "#/definitions/Category"
       - $ref: '#/definitions/Links'
@@ -399,8 +404,3 @@ definitions:
               format: 'uri-indicator'
             method:
               type: 'string'
-              enum:
-                - GET
-                - POST
-                - PUT
-                - DELETE
