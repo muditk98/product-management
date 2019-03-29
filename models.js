@@ -132,7 +132,7 @@ let category_samples = [
 	new Category('food', root_cat, 5),
 	new Category('electronic', root_cat, 18)
 ]
-category_samples.push(new Category('Laptops', category_samples[category_samples.length-1]))
+category_samples.push(new Category('Consoles', category_samples[category_samples.length-1]))
 exports.category_samples = category_samples
 exports.product_samples = [
 	new Product('Lays', category_samples[1], 'Frito', 10),
