@@ -136,5 +136,5 @@ category_samples.push(new Category('Laptops', category_samples[category_samples.
 exports.category_samples = category_samples
 exports.product_samples = [
 	new Product('Lays', category_samples[1], 'Frito', 10),
-	new Product('Asus ROG XDXD', category_samples[2], 'Asus', 100000)
+	new Product('Nintendo Switch', category_samples[2], 'Nintendo', 100000)
 ]
