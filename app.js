@@ -102,7 +102,7 @@ app.put('/products/:id', (req, res) => {
 		prod.brand = product.brand || prod.brand
 		prod.price = product.price || prod.price
 		Object.keys(product.attributes).forEach(key => {
-			prod.attributes[key] = product.attributes[key] || prod.attributes[key]
+			prod.attributes[key] = prod.attributes[key]
 		})
 		res.send(prod.stage())
 	} else {
