@@ -20,7 +20,7 @@ paths:
     get:
       tags:
         - product
-      summary: "Get products based on name (regex case insensitive match)"
+      summary: "Get products based on name and brand (regex case insensitive match)"
       operationId: "getProductsByName"
       consumes: 
         - application/json
