@@ -1,4 +1,4 @@
-const DEFAULT_TAX = 18
+const DEFAULT_TAX = 7
 class Category {
 	constructor(name, parent, tax) {
 		this.name = name

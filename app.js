@@ -51,7 +51,7 @@ app.post('/products', (req, res) => {
 	} else {
 		res.status(400).send({
 			success: false,
-			message: "Category with given id doesn't exist"
+			message: "Invalid request body"
 		})
 	}
 })
