@@ -18,6 +18,7 @@ app.get('/products', (req, res) => {
 	res.send(
 		app.locals.products
 			.filter(value => RegExp(req.query.name || '', 'i').test(value.name))
+			.filter(value => RegExp(req.query.brand || '', 'i').test(value.brand))
 			.map(value => value.stage())
 	)
 })
